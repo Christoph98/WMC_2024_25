@@ -7,7 +7,7 @@ body {
     background-image: url('Bilder/Motorrad.jpg'); 
     background-size: cover;
     background-position: center;
-    background-attachment: fixed;
+   
     color: #333;
 }
 
@@ -44,7 +44,7 @@ body {
 }
 
 .nav-link {
-    color: #5191aa;
+    color: #34495e;
     font-weight: bold;
 }
 
