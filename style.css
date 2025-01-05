@@ -1,69 +1,70 @@
+/* Allgemeine Stile */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    color: #333;
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
     margin: 0;
     padding: 0;
-    line-height: 1.6;
+    background-image: url('Bilder/Motorrad.jpg'); /* Pfad zum Hintergrundbild */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #333;
 }
 
-/* Container für die Hauptinhalte */
-.container {
-    width: 80%;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-/* Überschriften Styling */
-h1, h2 {
-    color: #2c3e50;
+/* Hero-Header */
+.hero {
     text-align: center;
+    padding: 4rem 1rem;
+    background: rgba(255, 255, 255, 0.8); /* Leicht transparentes Weiß */
+    border-bottom: 2px solid #ccc;
 }
 
-/* Styling für das Profilbild */
 .profile-pic {
-    display: block;
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    margin: 20px auto;
-    border: 4px solid #2980b9;
+    border: 4px solid #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Styling für die Infoboxen */
-.info-box {
-    background-color: #e8f4fc;
-    padding: 20px;
-    margin: 20px 0;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.hero h1 {
+    font-size: 2.5rem;
+    margin-top: 1rem;
+    color: #2c3e50;
 }
 
-/* Styling für den Button */
-.cta-button {
-    display: block;
-    width: 100%;
-    padding: 15px;
-    margin: 20px 0;
-    color: white;
-    background-color: #2980b9;
-    text-align: center;
-    border: none;
-    border-radius: 5px;
-    text-decoration: none;
+.hero p {
+    font-size: 1.2rem;
+    color: #7f8c8d;
+}
+
+/* Navigation */
+.navbar {
+    background-color: rgba(255, 255, 255, 0.9); /* Halbtransparentes Weiß */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.nav-link {
+    color: #34495e;
     font-weight: bold;
 }
 
-.cta-button:hover {
-    background-color: #1b4f72;
-    cursor: pointer;
+.nav-link:hover {
+    color: #1abc9c; /* Grün */
 }
 
-/* Footer */
-footer {
-    text-align: center;
-    padding: 10px;
-    font-size: 0.9em;
-    color: #555;
+.navbar-brand {
+    color: #2c3e50;
+    font-size: 1.5rem;
+    font-weight: bold;
 }
+
+/* Sektionen */
+.section {
+    padding: 4rem 1rem;
+}
+
+.bg-light {
+    background: rgba(255, 255, 255, 0.8); /* Leicht transparent */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px
