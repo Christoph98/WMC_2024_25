@@ -1,29 +1,29 @@
-/* Allgemeine Stile */
+
 body {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    background-image: url('Bilder/Motorrad.jpg'); /* Pfad zum Hintergrundbild */
+    background-image: url('Bilder/Motorrad.jpg'); 
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
     color: #333;
 }
 
-/* Hero-Header */
+
 .hero {
     text-align: center;
     padding: 4rem 1rem;
-    background: rgba(255, 255, 255, 0.8); /* Leicht transparentes Weiß */
+    background: rgba(255, 255, 255, 0.8); 
     border-bottom: 2px solid #ccc;
 }
 
 .profile-pic {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    border: 4px solid #fff;
+    width: 90px;
+    height: 110px;
+    border-radius: 100%;
+    border: 1px solid #070707;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -35,22 +35,21 @@ body {
 
 .hero p {
     font-size: 1.2rem;
-    color: #7f8c8d;
+    color: #020202;
 }
 
-/* Navigation */
 .navbar {
-    background-color: rgba(255, 255, 255, 0.9); /* Halbtransparentes Weiß */
+    background-color: rgba(255, 255, 255, 0.9); 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .nav-link {
-    color: #34495e;
+    color: #5191aa;
     font-weight: bold;
 }
 
 .nav-link:hover {
-    color: #1abc9c; /* Grün */
+    color: #1abc9c; 
 }
 
 .navbar-brand {
@@ -58,13 +57,19 @@ body {
     font-size: 1.5rem;
     font-weight: bold;
 }
+section{
+background: rgba(255, 255, 255, 0.8); 
+    padding: 4rem 1rem;
+    border-radius: 8px; 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); 
+}
 
-/* Sektionen */
 .section {
     padding: 4rem 1rem;
 }
 
 .bg-light {
-    background: rgba(255, 255, 255, 0.8); /* Leicht transparent */
+    background: rgba(255, 255, 255, 0.8); 
     border-radius: 8px;
     box-shadow: 0 2px 8px
+}
