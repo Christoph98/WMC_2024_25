@@ -68,7 +68,7 @@ body {
     font-size: 14px;
     font-weight: bold;
     color: #00b36b;
-    margin-top: 10px;
+    margin-top:10px;
 }
 
 .faq {
@@ -99,5 +99,108 @@ body {
 .faq-item p {
     font-size: 14px;
     color: #555;
-    line-height: 1.6;
+    line-height:1.6;
+}
+
+.footer {
+    background-color: #080c16;
+    color: #fcfcfc;
+    padding: 60px 20px;
+    position: relative;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.footer-logo {
+    text-align: center;
+}
+
+.footer-logo img {
+    display: block;
+    margin: 0 auto 20px auto;
+    width: 120px;
+}
+
+.footer-button {
+    background-color: #1fe374;
+    color: #080c16;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 200px;
+    margin: 0 auto 20px auto;
+}
+
+.footer-button:hover {
+    background-color: #00ad6a;
+    color: #fcfcfc;
+}
+
+.footer-links {
+    display: flex;
+    gap: 60px;
+}
+
+.footer-column h4 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #fcfcfc;
+}
+
+.footer-column a {
+    display: block;
+    margin-bottom: 8px;
+    color: #fcfcfc;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.footer-column a:hover {
+    text-decoration: underline;
+}
+
+.footer-bottom {
+    text-align: center;
+    font-size: 12px;
+    color: #fcfcfc;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 20px;
+    margin-top: 40px;
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.footer-bottom a {
+    color: #fcfcfc;
+    text-decoration: none;
+}
+
+.footer-bottom a:hover {
+    text-decoration: underline;
+}
+
+.contact-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: #1fe374;
+    color: #080c16;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.contact-button:hover {
+    background-color: #00ad6a;
+    color:#fcfcfc;
 }
