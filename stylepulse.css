@@ -1,7 +1,7 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #f0fff4;
+    background-color: #eafaf1;
 }
 
 .navbar {
@@ -34,13 +34,13 @@ body {
 
 .nav-links a.sign-up {
     padding: 5px 10px;
-    border: 2px solid #00b36b;
+    border: 2px solid #1fe374;
     border-radius: 5px;
-    color: #00b36b;
+    color: #1fe374;
 }
 
 .nav-links a.sign-up:hover {
-    background-color: #00b36b;
+    background-color: #1fe374;
     color:white;
 }
 
@@ -69,4 +69,35 @@ body {
     font-weight: bold;
     color: #00b36b;
     margin-top: 10px;
+}
+
+.faq {
+    padding: 40px 20px;
+    background-color: #fcfcfc;
+    text-align: left;
+}
+
+.faq h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.faq-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.faq-item h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.faq-item p {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
 }
