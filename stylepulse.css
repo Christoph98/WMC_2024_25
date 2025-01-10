@@ -43,3 +43,30 @@ body {
     background-color: #00b36b;
     color:white;
 }
+
+.testimonial {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #f0fff4;
+}
+
+.testimonial-logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.testimonial-quote {
+    font-size: 20px;
+    font-style: italic;
+    color: #333;
+    margin: 10px 0;
+}
+
+.testimonial-author {
+    font-size: 14px;
+    font-weight: bold;
+    color: #00b36b;
+    margin-top: 10px;
+}
