@@ -16,11 +16,9 @@ body {
     border-bottom: 1px solid #ddd;
 }
 
-.logo a {
-    font-size: 24px;
-    font-weight: bold;
-    color: #00b36b;
-    text-decoration: none;
+.logo img { 
+    height: 35px;
+    width: auto;
 }
 
 .nav-links a {
