@@ -10,7 +10,7 @@ body {
     position: fixed;
     align-items: center;
     top : 0;
-    width:67%;
+    width:75%;
     z-index: 1000;
     background-color: #eafaf1;
     padding-left: 10%;
@@ -147,8 +147,8 @@ body {
     background-color: #fcfcfc;
     border-radius: 1px;
     border:#00ad6a solid 1px;
-    border-top-left-radius: 10px; /* Obere linke Ecke abrunden */
-    border-top-right-radius: 10px; /* Obere rechte Ecke abrunden */
+    border-top-left-radius: 10px; 
+    border-top-right-radius: 10px; 
     display: inline-block;
     margin-top: -25px;
 }
@@ -183,6 +183,8 @@ body {
 
 .card.small-business h4 {
     text-align: center;
+    margin: 0%;
+    margin-top: 25px;
 }
 
 .card.premium {
@@ -192,9 +194,14 @@ body {
     margin-right: -20px;
     min-height: 80px;
     border: 1px solid #dae0de;
-    box-sizing: border-box;
     justify-content: space-evenly;
     align-items: center;
+}
+
+.card.premium ul {
+    list-style: none;
+    padding: 10px; ;
+    margin:0
 }
 
 .card.premium h2 {
@@ -203,13 +210,19 @@ body {
 }
 
 .card.premium h4{
-    margin: 0;
-    color: rgb(108, 108, 108);
-    font-size: smaller;
+    margin-top: 25px;
+    margin-bottom: -5px;
+    color: #080c16;
     letter-spacing: 0.5px;
-    font-weight: 500;
+    font-weight: bold;
     line-height: 20px;
     text-align: center;
+}
+
+.card.premium h5 {
+    color: #737477;
+    text-align: center;
+    margin: 0;
 }
 
 .Banner-Inhalt {
