@@ -8,17 +8,13 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
     background-color: #f0fff4;
     position: fixed;
-    width: 100%;
-    top: 0;
-    border-bottom: 1px solid #ddd;
+    width: 100%
 }
 
 .logo img { 
-    height: 35px;
-    width: auto;
+    height: 40px;
 }
 
 .nav-links a {
@@ -61,24 +57,20 @@ body {
     color: #555;
     max-width: 700px;
     margin: 0 auto;
-    line-height: 1.6;
+    line-height:1.6;
 }
 
 .container {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
     overflow: visible;
 }
 
 .card {
-    display: flex;
     flex-direction: column;
     background-color: white;
-    border-radius: 8px;
     padding: 20px;
     width: 300px;
-    text-align: left;
 }
 
 .card h2, .card h3 {
@@ -119,10 +111,9 @@ body {
 }
 
 .card .price {
-    font-size: 24px;
-    color: #1db954;
+    color: #080c16;
     margin: 10px 0;
-    font-weight: bold;
+    text-align: center;
 }
 
 .card button {
@@ -130,10 +121,15 @@ body {
     color: white;
     border: none;
     padding: 10px;
-    border-radius: 4px;
+    border-radius: 0;
     cursor: pointer;
     font-size: 16px;
     margin-top: 10px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
 }
 
 .card button:hover {
@@ -145,12 +141,40 @@ body {
       
 }
 
-.card.small-business .recommended {
-    color: white;
-    background-color: #1db954;
-    padding: 5px 10px;
-    border-radius: 4px;
+.card.small-business {
+    color: #080c16;
+    background-color: #fcfcfc;
+    padding: 1px 10px;
+    border-radius: 1px;
+    border:#00ad6a solid 1px;
+    border-top-left-radius: 10px; /* Obere linke Ecke abrunden */
+    border-top-right-radius: 10px; /* Obere rechte Ecke abrunden */
     display: inline-block;
+    margin-bottom: 60px;
+}
+
+.card.small-business .button {
+    color: #00ad6a;
+    align-items: center;
+    text-align: center;
+    border-radius: 0;
+}
+
+.banner {
+    left: 0;
+    width: 90%; /* Stellt sicher, dass das Banner die gesamte Breite ausfüllt */
+    background-color: #00ad6a;
+    color: white;
+    text-align: center;
+    border-top-left-radius: 10px; /* Obere linke Ecke abrunden */
+    border-top-right-radius: 10px; /* Obere rechte Ecke abrunden */
+}
+
+.card.small-business h1 {
+    color: #00ad6a;
+    text-align: center;
+    font-weight: bold;
+    font-size: 40px;
 }
 
 .card.premium {
@@ -160,7 +184,7 @@ body {
 .testimonial {
     text-align: center;
     padding: 40px 20px;
-    background-color: #f0fff4;
+    background-color: #eafaf1;
 }
 
 .testimonial-logo {
