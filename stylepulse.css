@@ -23,13 +23,14 @@ body {
 
 .nav-links a {
     margin-left: 20px;
-    color: #333;
+    color: #1fe374;
     text-decoration: none;
     font-size: 16px;
 }
 
 .nav-links a.active {
     font-weight: bold;
+    color:#080c16
 }
 
 .nav-links a.sign-up {
@@ -189,7 +190,6 @@ body {
     background-color: #f9f9f9;
     height: fit-content;
     margin-right: -20px;
-    /*flex-grow: 1; */
     min-height: 80px;
     border: 1px solid #dae0de;
     box-sizing: border-box;
@@ -223,6 +223,7 @@ body {
 }
 
 .testimonial {
+    align-items: center;
     text-align: center;
     padding: 40px 20px;
     background-color: #eafaf1;
@@ -295,6 +296,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-right: 5%;
     margin-bottom: 40px;
 }
 
@@ -336,7 +338,7 @@ body {
 .footer-column a {
     display: block;
     margin-bottom: 8px;
-    color: #fcfcfc;
+    color: #00ad6a;
     text-decoration: none;
     font-size: 14px;
 }
@@ -368,11 +370,10 @@ body {
     bottom: 20px;
     right: 20px;
     background-color: #1fe374;
-    color: #080c16;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 14px;
+    color: #fcfcfc;
+    border-color: #fcfcfc;
+    padding: 10px;
+    border-radius: 0;
     cursor: pointer;
 }
 
