@@ -8,9 +8,9 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #f0fff4;
+    background-color: #eafaf1;
     position: fixed;
-    width: 100%
+    width: 100%;
 }
 
 .logo img { 
@@ -71,10 +71,6 @@ body {
     background-color: white;
     padding: 20px;
     width: 300px;
-}
-
-.card h2, .card h3 {
-    margin: 0 0 10px;
 }
 
 .card ul {
@@ -161,13 +157,18 @@ body {
 }
 
 .banner {
-    left: 0;
-    width: 90%; /* Stellt sicher, dass das Banner die gesamte Breite ausfüllt */
     background-color: #00ad6a;
     color: white;
     text-align: center;
-    border-top-left-radius: 10px; /* Obere linke Ecke abrunden */
-    border-top-right-radius: 10px; /* Obere rechte Ecke abrunden */
+    font-weight: bold;
+    margin-top: 0;
+    font-size: 14px;
+    height: 39px;
+    letter-spacing: 3px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin-left: -20px;
+    margin-right: -20px;
 }
 
 .card.small-business h1 {
@@ -177,8 +178,27 @@ body {
     font-size: 40px;
 }
 
+.card.small-business h4 {
+    text-align: center;
+}
+
 .card.premium {
     background-color: #f9f9f9;
+    height: fit-content;
+}
+
+.card.premium h2 {
+    color: #00ad6a;
+    text-align: center;
+}
+
+.card.premium h4{
+    text-align: center;
+}
+
+.Banner-Inhalt {
+    padding:20px;
+    background-color: #d6dae5;
 }
 
 .testimonial {
@@ -244,6 +264,8 @@ body {
     color: #fcfcfc;
     padding: 60px 20px;
     position: relative;
+    padding-left: 10%;
+    padding-right: 20%;
 }
 
 .footer-content {
