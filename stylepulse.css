@@ -44,6 +44,119 @@ body {
     color:white;
 }
 
+.hero-section {
+    background-color: #eafaf1;
+    padding: 100px 20px;
+    text-align: center;
+}
+
+.hero-section h1 {
+    font-size: 36px;
+    color: #080c16;
+    margin-bottom: 20px;
+}
+
+.hero-section p {
+    font-size: 18px;
+    color: #555;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow: visible;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    width: 300px;
+    text-align: left;
+}
+
+.card h2, .card h3 {
+    margin: 0 0 10px;
+}
+
+.card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.card ul li {
+    margin-bottom: 10px;
+    position: relative;
+    padding-left: 20px;
+}
+
+.card ul li::before {
+    content: "✔";
+    color: #1db954;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.card.basics ul li::before {
+    content: "•";
+    color: #080c16;
+}
+
+.card.basics h3 {
+    color: #00ad6a;
+}
+
+.card.basics a {
+    color: #080c16;
+}
+
+.card .price {
+    font-size: 24px;
+    color: #1db954;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+.card button {
+    background-color: #1db954;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.card button:hover {
+    background-color: #148841;
+}
+
+.card.basics {
+    background-color: #eafaf1; 
+      
+}
+
+.card.small-business .recommended {
+    color: white;
+    background-color: #1db954;
+    padding: 5px 10px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.card.premium {
+    background-color: #f9f9f9;
+}
+
 .testimonial {
     text-align: center;
     padding: 40px 20px;
