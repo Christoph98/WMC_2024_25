@@ -1,19 +1,25 @@
-function zeichne(kante) 
+function isPrime(num) 
 {
-    for (let z=0; z<kante; z++) 
-    {
-    let output = "";
-        for (let s=0; s<kante; s++) 
-        {
-            if (z===0|| z===kante-1|| s===0|| s===kante-1) 
-            {
-                output += "* ";
-            }
-            else
-            {
-                output += "  ";
-            }
-         console.log(output);
-        }
+    if (num <= 1) return false;
+    if (num === 2) return true;
+    if (num % 2 === 0) return false;
+    for (let i = 3; i <= Math.sqrt(num); i += 2) {
+      if (num % i === 0) return false;
     }
+    return true;
 }
+function checkPrime() 
+{
+    const number = parseInt(document.getElementById("numberInput").value, 10);
+    let resultText = "";
+    if (isNaN(number)) 
+    {
+      resultText = "Bitte geben Sie eine gültige Zahl ein!";
+    } else if (isPrime(number)) 
+    {
+      resultText = number + " ist eine Primzahl.";
+    } else {
+      resultText = number + " ist keine Primzahl.";
+    }
+    document.getElementById("result").textContent = resultText;
+  }
