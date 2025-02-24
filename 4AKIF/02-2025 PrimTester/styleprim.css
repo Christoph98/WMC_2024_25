@@ -13,7 +13,26 @@ input, button {
       font-size: 16px;
     }
 #result {
+      color: black;
       margin-top: 50px;
       font-weight: bold;
       font-size: 2rem;
+    }
+
+.box-green {
+      border: 3px solid green;
+      background-color: #d2f8d2; 
+      color: #0a0;              
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px #0f0, 0 0 10px #0f0; 
+    }
+
+.box-red {
+      border: 3px solid red;
+      background-color: #f8d2d2; 
+      color: #f00;              
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px #f00, 0 0 10px #f00;
     }
