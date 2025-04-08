@@ -1,0 +1,123 @@
+{
+    "response_code": 0,
+    "results": [
+      {
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "Science &amp; Nature",
+        "question": "Which of these chemical compounds is NOT found in gastric acid?",
+        "correct_answer": "Sulfuric acid",
+        "incorrect_answers": [
+          "Hydrochloric acid",
+          "Potassium chloride",
+          "Sodium chloride"
+        ]
+      },
+      {
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "General Knowledge",
+        "question": "Who is the youngest person to receive a Nobel Prize?",
+        "correct_answer": "Malala Yousafzai",
+        "incorrect_answers": [
+          "Lawrence Bragg",
+          "Werner Heisenberg",
+          "Yasser Arafat"
+        ]
+      },
+      {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Entertainment: Books",
+        "question": "What was the pen name of novelist, Mary Ann Evans?",
+        "correct_answer": "George Eliot",
+        "incorrect_answers": [
+          "George Orwell",
+          "George Bernard Shaw",
+          "George Saunders"
+        ]
+      },
+      {
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "General Knowledge",
+        "question": "What is the largest organ of the human body?",
+        "correct_answer": "Skin",
+        "incorrect_answers": [
+          "Heart",
+          "large Intestine",
+          "Liver"
+        ]
+      },
+      {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Celebrities",
+        "question": "When was Elvis Presley born?",
+        "correct_answer": "January 8, 1935",
+        "incorrect_answers": [
+          "December 13, 1931",
+          "July 18, 1940",
+          "April 17, 1938"
+        ]
+      },
+      {
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "General Knowledge",
+        "question": "What was the first ever London Underground line to be built?",
+        "correct_answer": "Metropolitan Line",
+        "incorrect_answers": [
+          "Circle Line",
+          "Bakerloo Line",
+          "Victoria Line"
+        ]
+      },
+      {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Mythology",
+        "question": "This Greek mythological figure is the god/goddess of battle strategy (among other things).",
+        "correct_answer": "Athena",
+        "incorrect_answers": [
+          "Ares",
+          "Artemis",
+          "Apollo"
+        ]
+      },
+      {
+        "type": "boolean",
+        "difficulty": "easy",
+        "category": "Entertainment: Music",
+        "question": "American rapper Dr. Dre actually has a Ph.D. doctorate.",
+        "correct_answer": "False",
+        "incorrect_answers": [
+          "True"
+        ]
+      },
+      {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Entertainment: Japanese Anime &amp; Manga",
+        "question": "Who is the main character in One Piece?",
+        "correct_answer": "Luffy",
+        "incorrect_answers": [
+          "Shanks",
+          "Zoro",
+          "Smoker"
+        ]
+      },
+      {
+        "type": "multiple",
+        "difficulty": "medium",
+        "category": "Entertainment: Video Games",
+        "question": "What is the name of the protagonist of Life Is Strange?",
+        "correct_answer": "Max Caulfield",
+        "incorrect_answers": [
+          "Frank Bowers",
+          "Rachel Amber",
+          "Kate Marsh"
+        ]
+      }
+    ]
+  }
