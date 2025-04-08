@@ -24,7 +24,7 @@ class pizza
     console.log("Pizzas reversed:", arr);
    // arr.sort((pizza_a, pizza_b) =>{return pizza_a.price - pizza_b.price});
     arr.sort(compare);
-    console.log("Pizzas sorted:", arr);
+    console.log("Pizzas sorted by price:", arr);
 
     function compare(pizza_a, pizza_b)
 {
