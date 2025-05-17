@@ -1,6 +1,6 @@
 class State {
     api_url =
-        "https://opentdb.com/api.php?amount=10&category=18&difficulty=medium&type=multiple";
+        "https://opentdb.com/api.php?amount=10";
     #response;
     async get_new_questions() {
         const response = await fetch(this.api_url);
