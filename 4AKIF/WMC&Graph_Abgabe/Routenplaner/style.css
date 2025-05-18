@@ -6,7 +6,7 @@
 }
 
 * {
-  box-sizing: border-box;
+  box-sizing: border-box;  
 }
 
 body {
@@ -69,15 +69,7 @@ section > div {
     text-align: left;
   }
 }
-/* Responsive */
-@media (max-width: 600px) {
-  nav ul {
-    flex-direction: column;
-  }
-  nav li {
-    text-align: left;
-  }
-}
+
 
 #joke-result .card {
   padding: 1rem;
