@@ -1,8 +1,8 @@
 export function add(a: number, b: number): number {
   return a + b;
 }
-
-// Learn more at https://docs.deno.com/runtime/manual/examples/module_metadata#concepts
-if (import.meta.main) {
-  console.log("Add 2 + 3 =", add(2, 3));
+for (let i = 0; i < 5; i++) {
+  const a = Math.round(Math.random() * 10);
+  const b = Math.round(Math.random() * 10);
+  console.log(`Addition ${i}: ${a} + ${b} = ${add(a,b)}`);
 }

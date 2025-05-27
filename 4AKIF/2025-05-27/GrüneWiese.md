@@ -1,1 +1,2 @@
 -deno init
+-deno add npm:bitwise
