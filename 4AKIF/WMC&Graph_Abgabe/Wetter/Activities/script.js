@@ -116,4 +116,201 @@ document.getElementById('get-joke').addEventListener('click', async () => {
   }
 });
 
+// 7) Graph-Tab
+
+function parseCSVtoMatrix(csvText) {
+  const lines = csvText
+    .trim()
+    .split(/\r?\n/); // Zeilen umbrechen (auch CRLF)
+  const matrix = lines.map(line =>
+    line
+      .split(';')
+      .map(cell => {
+        const num = parseFloat(cell.trim());
+        return isNaN(num) ? 0 : num;
+      })
+  );
+  return matrix;
+}
+
+
+function buildAdjList(matrix) {
+  const n = matrix.length;
+  const adjList = Array.from({ length: n }, () => []);
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < n; j++) {
+      if (matrix[i][j] !== 0) {
+        adjList[i].push(j);
+      }
+    }
+  }
+  return adjList;
+}
+
+/**
+ * Führt Breitensuche (BFS) ab Startknoten 'src' durch und 
+ * gibt ein Array distances[] zurück, wobei distances[v] 
+ * die kürzeste Distanz (Anzahl Kanten) von src zu v ist.
+ * Unverbundene Knoten werden mit Infinity markiert.
+ */
+function bfsDistances(adjList, src) {
+  const n = adjList.length;
+  const dist = Array(n).fill(Infinity);
+  const queue = [];
+  dist[src] = 0;
+  queue.push(src);
+
+  while (queue.length > 0) {
+    const u = queue.shift();
+    for (const v of adjList[u]) {
+      if (dist[v] === Infinity) {
+        dist[v] = dist[u] + 1;
+        queue.push(v);
+      }
+    }
+  }
+  return dist;
+}
+
+/**
+ * Berechnet für jeden Knoten die Exzentrizität:
+ * Exzentrizität(u) = max dist(u, v) über alle v.
+ * Wenn ein Knoten unverbunden ist, bleibt die Exzentri-
+ * zität = Infinity.
+ */
+function computeEccentricities(adjList) {
+  const n = adjList.length;
+  const exz = Array(n).fill(0);
+
+  for (let u = 0; u < n; u++) {
+    const dists = bfsDistances(adjList, u);
+    // Maximaldistanz (ohne Infinity, wenn vollständig verbunden)
+    let maxd = 0;
+    for (const d of dists) {
+      if (d === Infinity) {
+        maxd = Infinity;
+        break;
+      }
+      if (d > maxd) maxd = d;
+    }
+    exz[u] = maxd;
+  }
+  return exz;
+}
+
+/**
+ * Bestimmt Radius, Durchmesser und Zentrum.
+ * - Radius = min exz(u)
+ * - Durchmesser = max exz(u)
+ * - Zentrum = alle Knoten u mit exz(u) == Radius
+ */
+function computeRadiusDiameterCenter(eccentricities) {
+  const finiteExz = eccentricities.filter(e => e !== Infinity);
+  const radius = Math.min(...finiteExz);
+  const diameter = Math.max(...finiteExz);
+  const center = [];
+  eccentricities.forEach((e, idx) => {
+    if (e === radius) center.push(idx);
+  });
+  return { radius, diameter, center };
+}
+
+/**
+ * Hauptfunktion: Wird aufgerufen, wenn der Nutzer die CSV-Datei ausgewählt 
+ * und auf “Graph verarbeiten” geklickt hat.
+ */
+document.getElementById('process-graph').addEventListener('click', () => {
+  const fileInput = document.getElementById('graph-file-input');
+  const resultsDiv = document.getElementById('graph-results');
+  resultsDiv.innerHTML = ''; // Ergebnisbereich leeren
+
+  if (!fileInput.files || fileInput.files.length === 0) {
+    alert('Bitte wähle erst eine CSV-Datei mit der Adjazenzmatrix aus.');
+    return;
+  }
+
+  const file = fileInput.files[0];
+  const reader = new FileReader();
+
+  reader.onload = function(event) {
+    try {
+      // 1) CSV-Text parsen
+      const text = event.target.result;
+      const matrix = parseCSVtoMatrix(text);
+
+      // 2) Validierung: quadratische Matrix?
+      const n = matrix.length;
+      let isSquare = true;
+      for (const row of matrix) {
+        if (row.length !== n) {
+          isSquare = false;
+          break;
+        }
+      }
+      if (!isSquare) {
+        resultsDiv.innerHTML = `<div class="graph-card">
+          <strong>Fehler:</strong> Die CSV muss eine quadratische Adjazenzmatrix sein (gleiche Anzahl Zeilen und Spalten).
+        </div>`;
+        return;
+      }
+
+      // 3) Adjazenzliste bauen
+      const adjList = buildAdjList(matrix);
+
+      // 4) Exzentrizitäten berechnen
+      const exz = computeEccentricities(adjList);
+
+      // 5) Radius, Durchmesser, Zentrum berechnen
+      const { radius, diameter, center } = computeRadiusDiameterCenter(exz);
+
+      // 6) Ergebnisse formatieren und anzeigen
+      let html = '';
+
+      // 6a) Adjazenzmatrix als Tabelle (optional)
+      html += '<h3>Adjazenzmatrix</h3>';
+      html += '<table><thead><tr><th></th>';
+      for (let j = 0; j < n; j++) {
+        html += `<th>${j}</th>`;
+      }
+      html += '</tr></thead><tbody>';
+      for (let i = 0; i < n; i++) {
+        html += `<tr><th>${i}</th>`;
+        for (let j = 0; j < n; j++) {
+          html += `<td>${matrix[i][j]}</td>`;
+        }
+        html += '</tr>';
+      }
+      html += '</tbody></table>';
+
+      // 6b) Exzentrizitäten-Liste
+      html += '<h3>Exzentrizitäten</h3>';
+      html += '<ul>';
+      exz.forEach((e, idx) => {
+        const displayE = e === Infinity ? '∞ (nicht verbunden)' : e;
+        html += `<li>Knoten ${idx}: Exzentrizität = ${displayE}</li>`;
+      });
+      html += '</ul>';
+
+      // 6c) Radius, Durchmesser, Zentrum
+      html += '<div class="graph-card">';
+      html += `<p><strong>Radius:</strong> ${radius === Infinity ? '∞' : radius}</p>`;
+      html += `<p><strong>Durchmesser:</strong> ${diameter === Infinity ? '∞' : diameter}</p>`;
+      html += `<p><strong>Zentrum:</strong> ${center.length > 0 ? center.join(', ') : '—'}</p>`;
+      html += '</div>';
+
+      resultsDiv.innerHTML = html;
+    } catch (err) {
+      console.error(err);
+      resultsDiv.innerHTML = `<div class="graph-card">
+        <strong>Fehler beim Verarbeiten:</strong> ${err.message}
+      </div>`;
+    }
+  };
+
+  reader.onerror = function() {
+    alert('Konnte die Datei nicht lesen.');
+  };
+
+  reader.readAsText(file);
+});
 

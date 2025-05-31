@@ -16,6 +16,8 @@
         <li data-section="forecast">5-Tage-Vorhersage</li>
         <li data-section="activity">Aktivität</li>
         <li data-section="about">Über</li>
+        <li data-section="graph">Graphen-Analyse</li>
+        <li data-section="matrix">Matrix-Multiplikation</li>
         <li data-section="jokes">Witze</li>
       </ul>
     </nav>
@@ -61,6 +63,45 @@
       </ul>
       <p>Responsive Design, modernes Flat-Look, mobile-freundlich.</p>
     </section>
+
+     <section id="graph" class="section">
+      <h2>Graphen-Analyse</h2>
+      <!-- 1) Datei-Upload -->
+      <p>Lade hier eine CSV-Datei hoch, die die Adjazenzmatrix enthält (ohne Kopfzeile, nur Matrix-Zahlen, Komma-separiert).</p>
+      <input type="file" id="graph-file-input" accept=".csv" />
+      <button id="process-graph">Graph verarbeiten</button>
+
+      <!-- 2) Anzeige der Ergebnisse -->
+      <div id="graph-results">
+        <!-- Hier werden später Distanzen, Exzentrizitäten, Radius, Durchmesser, Zentrum angezeigt -->
+      </div>
+    </section>
+
+     <section id="matrix" class="section">
+      <h2>Matrix-Multiplikation</h2>
+      <p>
+        Lade zwei CSV-Dateien hoch (Matrix A und Matrix B). Jede CSV sollte eine
+        reine Zahlentabelle (kommagetrennt) ohne Kopfzeile sein.<br>
+        A muss die Dimension m×n haben und B die Dimension n×p, damit das Produkt existiert.
+      </p>
+
+      <!-- Datei-Inputs -->
+      <div>
+        <label for="matrix-a-input">Matrix A (CSV): </label>
+        <input type="file" id="matrix-a-input" accept=".csv" />
+      </div>
+      <div style="margin-top: 0.5rem;">
+        <label for="matrix-b-input">Matrix B (CSV): </label>
+        <input type="file" id="matrix-b-input" accept=".csv" />
+      </div>
+
+      <!-- Button zum Starten der Multiplikation -->
+      <button id="process-matrix" style="margin-top: 1rem;">Matrizen multiplizieren</button>
+
+      <!-- Hier erscheint das Ergebnis -->
+      <div id="matrix-results" style="margin-top: 1rem;"></div>
+    </section>
+
 
     <section id="jokes" class="section">
         <h2>Witz des Tages</h2>

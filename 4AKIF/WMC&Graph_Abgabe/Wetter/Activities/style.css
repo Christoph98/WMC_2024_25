@@ -78,3 +78,66 @@ section > div {
   border-radius: 0.5rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+
+
+#graph-results {
+  margin-top: 1rem;
+}
+
+#graph-results table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+#graph-results th,
+#graph-results td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+#graph-results th {
+  background-color: var(--primary);
+  color: white;
+}
+
+.graph-card {
+  background: var(--card);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#matrix-results {
+  margin-top: 1rem;
+}
+
+#matrix-results table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+#matrix-results th,
+#matrix-results td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+  font-family: monospace;
+}
+
+#matrix-results th {
+  background-color: var(--primary);
+  color: white;
+}
+
+/* Eine kleine Karte für Fehlermeldungen */
+.matrix-card {
+  background: var(--card);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
