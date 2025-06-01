@@ -26,7 +26,7 @@ class Person {
     }
 
     toString() {
-        return`${this.vorName()} ${this.nachName()} (${this.groesseCM()}cm, ${this.gewichtKG}kg)`;              
+        return `${this.vorName()} ${this.nachName()} (${this.groesseCM()}cm, ${this.gewichtKG}kg)`;              
     }
 
     getGender() { 
