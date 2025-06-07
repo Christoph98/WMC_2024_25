@@ -243,10 +243,10 @@ let matrix = [];
       reader.readAsText(file);
     });
 
-    function rechnen() {
+    function rechne() {
       const out = document.getElementById("ausgabe");
       if (matrix.length === 0) {
-        out.textContent = "Eyyy, ich brauch ne Matrix!";
+        out.textContent = "Gib mir eine Matrix"
         return;
       }
 
