@@ -94,21 +94,43 @@ document.getElementById('get-weather').addEventListener('click', async () => {
 
 document.getElementById('get-forecast').addEventListener('click', async () => {
   const cityInput = document.getElementById('city-input').value.trim();
-  if (!cityInput) return alert('Bitte erst im Wetter-Tab Stadt abrufen!');
+  const resultEl = document.getElementById('forecast-result');
 
+  // --- 1) Kein Stadt-Name eingegeben? ---
+  if (!cityInput) {
+    resultEl.innerHTML = `
+      <p class="error">
+        ⚠️ Bitte gib zuerst eine Stadt im Wetter-Tab ein!
+      </p>
+    `;
+    return;
+  }
+
+  // URL zusammenbauen
   const url = `https://api.openweathermap.org/data/2.5/forecast` +
               `?q=${encodeURIComponent(cityInput)}` +
               `&units=metric&lang=de&appid=${OWM_API_KEY}`;
+
   try {
-    const res  = await fetch(url);
-    if (!res.ok) return console.warn('Forecast nicht verfügbar');
+    const res = await fetch(url);
+
+    // --- 2) API liefert Fehler (z. B. Stadt nicht gefunden) ---
+    if (!res.ok) {
+      resultEl.innerHTML = `
+        <p class="error">
+          ⚠️ Leider konnte für „${cityInput}“ keine Vorhersage abgerufen werden.
+        </p>
+      `;
+      return;
+    }
+
     const data = await res.json();
 
-    // Stadt auslesen
+    // Stadtdaten
     const cityName    = data.city.name;
     const countryCode = data.city.country;
 
-    // Nur je Tag 12:00-Eintrag behalten
+    // Nur 12:00-Einträge je Tag
     const days = {};
     data.list.forEach(item => {
       const [date, time] = item.dt_txt.split(' ');
@@ -117,7 +139,7 @@ document.getElementById('get-forecast').addEventListener('click', async () => {
       }
     });
 
-    // HTML zusammenbauen
+    // HTML für die Vorhersage
     let html = `
       <h2>5-Tage-Vorhersage für ${cityName} (${countryCode})</h2>
       <div class="forecast-grid">
@@ -133,9 +155,16 @@ document.getElementById('get-forecast').addEventListener('click', async () => {
     });
     html += `</div>`;
 
-    document.getElementById('forecast-result').innerHTML = html;
+    resultEl.innerHTML = html;
+
   } catch (err) {
+    // --- 3) Netzwerk- oder andere Fehler ---
     console.error('Fehler Forecast:', err);
+    resultEl.innerHTML = `
+      <p class="error">
+        ⚠️ Unerwarteter Fehler. Bitte versuche es später noch einmal.
+      </p>
+    `;
   }
 });
 
