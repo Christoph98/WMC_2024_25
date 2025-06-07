@@ -53,9 +53,9 @@ document.getElementById('get-weather').addEventListener('click', async () => {
               `?q=${encodeURIComponent(city)}` +
               `&units=metric&lang=de&appid=${OWM_API_KEY}`;
   try {
-    const res = await fetch(url);                               // GET-Anfrage
-    if (!res.ok) return alert('Stadt nicht gefunden.');         // HTTP-Fehler behandeln
-    const data = await res.json();                              // JSON parsen
+    const res = await fetch(url);                               //behandeln
+    const data = await res.json();                              // JSON parse GET-Anfrage
+    if (!res.ok) return alert('Stadt nicht gefunden.');         // HTTP-Fehler n
     // UI-Update mit Stadtname, Beschreibung und Temperatur
     document.getElementById('weather-result').innerHTML = `
       <h3>${data.name}</h3>
@@ -433,18 +433,41 @@ seasons.forEach(season => {
           arrays.flat().forEach(d => { driversMap[d.driver_number] = d; });
           const drvHeader = document.createElement('h2'); drvHeader.textContent = 'Fahrer & Teams'; content.appendChild(drvHeader);
           const drvTable = document.createElement('table');
-          drvTable.innerHTML = `...`; // Tabellenaufbau wie zuvor
+          // Beispiel für Fahrertabelle
+        let html = '<tr><th>Nummer</th><th>Name</th><th>Team</th></tr>';
+        Object.values(driversMap).forEach(driver => {
+        html += `<tr>
+        <td>${driver.driver_number}</td>
+        <td>${driver.full_name}</td>
+        <td>${driver.team_name}</td>
+        </tr>`;
+       });
+        drvTable.innerHTML = html;
           content.appendChild(drvTable);
         });
 
         // B) Session-Übersicht pro Meeting
         const sessHeader = document.createElement('h2'); sessHeader.textContent = 'Sessions'; content.appendChild(sessHeader);
         meetings.forEach(meet => {
-          const meetDiv = document.createElement('div'); meetDiv.style.marginBottom = '1rem'; meetDiv.innerHTML = `<strong>${meet.meeting_name}</strong>`;
-          const tbl = document.createElement('table'); tbl.innerHTML = `...`; // Tabellenaufbau
+          const meetDiv = document.createElement('div');
+          meetDiv.style.marginBottom = '1rem';
+          meetDiv.innerHTML = `<strong>${meet.meeting_name}</strong>`;
+          const tbl = document.createElement('table');
+          // Sessions zu diesem Meeting filtern
+          const meetSessions = sessions.filter(s => s.meeting_key === meet.meeting_key);
+          let tblHtml = '<tr><th>Session</th><th>Typ</th><th>Start</th><th>Ende</th></tr>';
+          meetSessions.forEach(sess => {
+            tblHtml += `<tr>
+              <td>${sess.session_name}</td>
+              <td>${sess.session_type}</td>
+              <td>${sess.date_start ? sess.date_start.replace('T', ' ').slice(0, 16) : ''}</td>
+              <td>${sess.date_end ? sess.date_end.replace('T', ' ').slice(0, 16) : ''}</td>
+            </tr>`;
+          });
+          tbl.innerHTML = tblHtml;
           meetDiv.appendChild(tbl);
           content.appendChild(meetDiv);
-        });
+      });
       })
       .catch(err => {
         content.removeChild(loading);
@@ -455,7 +478,6 @@ seasons.forEach(season => {
   container.appendChild(details);
 });
 
-// Nintendo: Zufälligen Amiibo-Charakter abrufen und anzeigen
 async function fetchRandomNintendo() {
   const card = document.getElementById('characterCard');
   card.style.display = 'block';
@@ -465,7 +487,6 @@ async function fetchRandomNintendo() {
     const data = await res.json();
     const randomIndex = Math.floor(Math.random() * data.amiibo.length);
     const character = data.amiibo[randomIndex];
-    // Ausgabe in Card-Layout
     card.innerHTML = `
       <h2>${character.character}</h2>
       <img src="${character.image}" alt="Bild von ${character.character}" />
