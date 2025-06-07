@@ -93,42 +93,52 @@ document.getElementById('get-weather').addEventListener('click', async () => {
 // - HTML: Grid-Layout mit Karte je Tag (Datum, Beschreibung, Temp).
 
 document.getElementById('get-forecast').addEventListener('click', async () => {
-  const city = document.getElementById('city-input').value.trim();
-  if (!city) return alert('Bitte erst im Wetter-Tab Stadt abrufen!');
+  const cityInput = document.getElementById('city-input').value.trim();
+  if (!cityInput) return alert('Bitte erst im Wetter-Tab Stadt abrufen!');
 
   const url = `https://api.openweathermap.org/data/2.5/forecast` +
-              `?q=${encodeURIComponent(city)}` +
+              `?q=${encodeURIComponent(cityInput)}` +
               `&units=metric&lang=de&appid=${OWM_API_KEY}`;
   try {
-    const res = await fetch(url);
+    const res  = await fetch(url);
     if (!res.ok) return console.warn('Forecast nicht verfügbar');
     const data = await res.json();
 
+    // Stadt auslesen
+    const cityName    = data.city.name;
+    const countryCode = data.city.country;
+
+    // Nur je Tag 12:00-Eintrag behalten
     const days = {};
     data.list.forEach(item => {
-      // dt_txt: "2025-06-08 12:00:00"
-      const date = item.dt_txt.split(' ')[0];
-      if (!days[date] && item.dt_txt.endsWith('12:00:00')) {
+      const [date, time] = item.dt_txt.split(' ');
+      if (time === '12:00:00' && !days[date]) {
         days[date] = item;
       }
     });
 
-    let html = '<div class="forecast-grid">';
-    Object.keys(days).forEach(d => {
-      const it = days[d];
-      html += `<div class="card">
-        <strong>${d}</strong><br>
-        ${it.weather[0].description}<br>
-        ${it.main.temp.toFixed(1)}°C
-      </div>`;
+    // HTML zusammenbauen
+    let html = `
+      <h2>5-Tage-Vorhersage für ${cityName} (${countryCode})</h2>
+      <div class="forecast-grid">
+    `;
+    Object.entries(days).forEach(([date, it]) => {
+      html += `
+        <div class="card">
+          <strong>${date}</strong><br>
+          ${it.weather[0].description}<br>
+          ${it.main.temp.toFixed(1)}°C
+        </div>
+      `;
     });
-    html += '</div>';
+    html += `</div>`;
 
     document.getElementById('forecast-result').innerHTML = html;
   } catch (err) {
     console.error('Fehler Forecast:', err);
   }
 });
+
 
 // 6) Zufalls-Aktivität anzeigen
 // - Klick auf Button => einfacher, synchroner Callback
