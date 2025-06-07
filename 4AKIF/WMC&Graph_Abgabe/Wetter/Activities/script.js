@@ -399,3 +399,31 @@ function rechnen() {
 
       container.appendChild(details);
     });
+
+// Nintendo
+
+async function fetchRandomNintendo() {
+      const card = document.getElementById('characterCard');
+      card.style.display = 'block';
+      card.innerHTML = '<p>Lade zufälligen Charakter ...</p>';
+
+      try {
+        const res = await fetch('https://www.amiiboapi.com/api/amiibo/');
+        const data = await res.json();
+        const allCharacters = data.amiibo;
+
+        const randomIndex = Math.floor(Math.random() * allCharacters.length);
+        const character = allCharacters[randomIndex];
+
+        card.innerHTML = `
+          <h2>${character.character}</h2>
+          <img src="${character.image}" alt="Bild von ${character.character}" />
+          <p><strong>Name der Figur:</strong> ${character.name}</p>
+          <p><strong>Serie:</strong> ${character.amiiboSeries}</p>
+          <p><strong>Spiel-Serie:</strong> ${character.gameSeries}</p>
+          <p><strong>Typ:</strong> ${character.type}</p>
+        `;
+      } catch (error) {
+        card.innerHTML = `<p>Fehler beim Laden der Daten.</p>`;
+      }
+    }
