@@ -151,21 +151,32 @@ document.getElementById('get-activity').addEventListener('click', () => {
 // - Zwischennachricht "Lade Witz…" für bessere UX
 
 document.getElementById('get-joke').addEventListener('click', async () => {
+  // Referenz auf das Ergebnis-Element holen
   const output = document.getElementById('joke-result');
-  output.textContent = 'Lade Witz…';
+  // Zwischenmeldung für bessere Nutzererfahrung
+  output.textContent = 'Lade Witz… 🤔';
+
   try {
+    // Anfrage an die öffentliche Joke-API
     const res = await fetch('https://official-joke-api.appspot.com/jokes/programming/random');
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    // Die API liefert ein Array mit einem Witz-Objekt
     const [joke] = await res.json();
-    output.innerHTML = `<div class="card">
+
+    // Ausgabe des Witzes mit lachendem Emoji am Ende
+    output.innerHTML = `
+      <div class="card">
         <p><strong>Setup:</strong> ${joke.setup}</p>
-        <p><strong>Punchline:</strong> ${joke.punchline}</p>
-      </div>`;
+        <p><strong>Punchline:</strong> ${joke.punchline} 😂</p>
+      </div>
+    `;
   } catch (err) {
     console.error('Joke-Fehler:', err);
-    output.textContent = 'Fehler beim Laden des Witzes – mehr in Konsole.';
+    // Fehlermeldung im UI
+    output.textContent = 'Fehler beim Laden des Witzes – bitte später erneut probieren.';
   }
 });
+
 
 // 8) GRAPH-SECTION: CSV einlesen und Floyd–Warshall
 // -------------------------------------------------------------------------------
@@ -256,3 +267,125 @@ function rechnen() {
 
   document.getElementById('ausgabe').textContent = ausgabe;
 }
+
+//F1 Section 
+ // Liste der freien Seasons, die man ausklappen möchte
+    const seasons = [2025, 2024, 2023];
+
+    const container = document.getElementById('seasons-container');
+
+    seasons.forEach(season => {
+      const details = document.createElement('details');
+      const summary = document.createElement('summary');
+      summary.textContent = season;
+      details.appendChild(summary);
+
+      const content = document.createElement('div');
+      details.appendChild(content);
+
+      details.addEventListener('toggle', () => {
+        if (!details.open || content.hasChildNodes()) return;
+
+        const loading = document.createElement('div');
+        loading.className = 'loading';
+        loading.textContent = 'Lade Daten…';
+        content.appendChild(loading);
+
+        // 1) Meetings (Rennen) der Saison
+        fetch(`https://api.openf1.org/v1/meetings?year=${season}`)
+          .then(res => res.json()) // :contentReference[oaicite:0]{index=0}
+          .then(meetings => {
+            // 2) Sessions der Saison (Practice, Quali, Race)
+            return Promise.all([
+              meetings,
+              fetch(`https://api.openf1.org/v1/sessions?year=${season}`)
+                .then(res => res.json()) // :contentReference[oaicite:1]{index=1}
+            ]);
+          })
+          .then(([meetings, sessions]) => {
+            content.removeChild(loading);
+
+            // A) Fahrer- und Team-Übersicht
+            const raceSessions = sessions.filter(s => s.session_type === 'Race');
+            const driverPromises = raceSessions.map(s =>
+              fetch(`https://api.openf1.org/v1/drivers?session_key=${s.session_key}`)
+                .then(res => res.json()) // :contentReference[oaicite:2]{index=2}
+            );
+            Promise.all(driverPromises).then(arrays => {
+              // Fahrer und Teams deduplizieren
+              const driversMap = {};
+              arrays.flat().forEach(d => {
+                driversMap[d.driver_number] = d;
+              });
+
+              const drvHeader = document.createElement('h2');
+              drvHeader.textContent = 'Fahrer & Teams';
+              content.appendChild(drvHeader);
+
+              const drvTable = document.createElement('table');
+              drvTable.innerHTML = `
+                <thead>
+                  <tr><th>#</th><th>Name</th><th>Team</th></tr>
+                </thead>
+                <tbody>
+                  ${Object.values(driversMap).sort((a,b)=>
+                      a.driver_number - b.driver_number
+                    ).map(d => `
+                      <tr>
+                        <td>${d.driver_number}</td>
+                        <td>${d.full_name}</td>
+                        <td style="color:#${d.team_colour}">${d.team_name}</td>
+                      </tr>
+                    `).join('')}
+                </tbody>
+              `;
+              content.appendChild(drvTable);
+            });
+
+            // B) Session-Übersicht pro Meeting
+            const sessHeader = document.createElement('h2');
+            sessHeader.textContent = 'Sessions';
+            content.appendChild(sessHeader);
+
+            meetings.forEach(meet => {
+              const meetDiv = document.createElement('div');
+              meetDiv.style.marginBottom = '1rem';
+              meetDiv.innerHTML = `<strong>${meet.meeting_name}</strong>`;
+              
+              const tbl = document.createElement('table');
+              tbl.innerHTML = `
+                <thead>
+                  <tr><th>Session</th><th>Typ</th><th>Start</th><th>Ende</th></tr>
+                </thead>
+                <tbody>
+                  ${sessions
+                    .filter(s => s.meeting_key === meet.meeting_key)
+                    .map(s => {
+                      const start = new Date(s.date_start)
+                        .toLocaleString('de-DE', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' });
+                      const end = new Date(s.date_end)
+                        .toLocaleString('de-DE', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' });
+                      return `
+                        <tr>
+                          <td>${s.session_name}</td>
+                          <td>${s.session_type}</td>
+                          <td>${start}</td>
+                          <td>${end}</td>
+                        </tr>
+                      `;
+                    }).join('')}
+                </tbody>
+              `;
+              meetDiv.appendChild(tbl);
+              content.appendChild(meetDiv);
+            });
+          })
+          .catch(err => {
+            content.removeChild(loading);
+            content.textContent = 'Fehler beim Laden.';
+            console.error(err);
+          });
+      });
+
+      container.appendChild(details);
+    });
