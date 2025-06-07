@@ -6,16 +6,16 @@ const OWM_API_KEY = 'b41ab4b76492afa1d2d3cc37440970eb';
 // 2) Aktivitäten-Array:
 // Enthält verschiedene Freizeit-Tätigkeiten für zufällige Vorschläge.
 const activities = [
-  'Spaziergang im Park',                // Aktivität im Freien
-  'Lesen eines Buches',                  // Indoor-Lesen
-  'Kaffee in deinem Lieblingscafé',      // Soziale Aktivität
-  'Yoga zu Hause',                       // Entspannungsübung
-  'Fahrradtour',                         // Sportliche Aktivität
-  'Filmabend',                           // Entspannungsabend
-  'Koch-Challenge: Neues Rezept ausprobieren', // Kreative Herausforderung
-  'Fotospaziergang in der Stadt',        // Kombination von Spaziergang und Fotografie
-  'Meditation für 10 Minuten',           // Kurze Achtsamkeitsübung
-  'Museumsbesuch'                        // Kulturelle Aktivität
+  'Spaziergang im Park',               
+  'Lesen eines Buches',                  
+  'Kaffee in deinem Lieblingscafé',      
+  'Yoga zu Hause',                       
+  'Fahrradtour',                         
+  'Filmabend',                           
+  'Koch-Challenge: Neues Rezept ausprobieren', 
+  'Fotospaziergang in der Stadt',        
+  'Meditation für 10 Minuten',           
+  'Museumsbesuch'                        
 ];
 
 // 3) Navigation: Tab-System aufbauen
