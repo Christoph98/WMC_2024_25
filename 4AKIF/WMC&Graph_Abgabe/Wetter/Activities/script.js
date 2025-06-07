@@ -225,87 +225,180 @@ document.getElementById('get-joke').addEventListener('click', async () => {
 // - Anzeige: Matrix-Inhalt in Pre-Form (Zeilenumbruch-getrennt)
 
 let matrix = [];
-document.getElementById('csvFileInput').addEventListener('change', function(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    matrix = e.target.result
-      .trim()
-      .split('\n')
-      .filter(line => line.trim() !== '')
-      .map(line => line.split(';').map(Number));
-    document.getElementById('ausgabe').textContent =
-      'Adjazenzmatrix geladen:\n' + matrix.map(row => row.join(', ')).join('\n');
-  };
-  reader.readAsText(file);
-});
 
-// Kernfunktion: rechnen()
-// 1) Initialisierung einer Distanzmatrix D:
-//    - Unendliche Distanzen (Infinity) für alle Paare,
-//    - Null auf der Diagonale (Abstand zu sich selbst)
-//    - Ein-Kanten (1) bei Eintrag matrix[i][j] === 1
-// 2) Floyd–Warshall Algorithmus:
-//    - Drei geschachtelte Schleifen über k, i, j
-//    - Relaxation: D[i][j] = min(D[i][j], D[i][k] + D[k][j])
-// 3) Exzentrizitäten, Radius, Durchmesser, Zentrum:
-//    - Exzentrizität jedes Knotens: Maximum der erreichbaren Distanzen
-//    - Radius: Minimum aller Exzentrizitäten
-//    - Durchmesser: Maximum aller Exzentrizitäten
-//    - Zentrum: Knoten mit Exzentrizität == Radius
-// 4) Ausgabe: Textuelle Darstellung aller Werte + komplette Distanzmatrix
+    document.getElementById("csvFileInput").addEventListener("change", function(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        matrix = e.target.result
+          .trim()
+          .split(/\r?\n/)
+          .filter(line => line.trim() !== "")
+          .map(line => line.split(";").map(cell => Number(cell.trim())));
+        document.getElementById("ausgabe").textContent =
+          "Adjazenzmatrix geladen:\n" +
+          matrix.map(row => row.join(", ")).join("\n");
+      };
+      reader.readAsText(file);
+    });
 
-function rechnen() {
-  if (matrix.length === 0) {
-    document.getElementById('ausgabe').textContent =
-      'Gib mir eine Matrix habe ich gesagt!';
-    return;
-  }
-
-  const n = matrix.length;
-  const D = Array.from({ length: n }, () => Array(n).fill(Infinity));
-  for (let i = 0; i < n; i++) {
-    D[i][i] = 0;
-    for (let j = 0; j < n; j++) {
-      if (matrix[i][j] === 1) D[i][j] = 1;
-    }
-  }
-
-  for (let k = 0; k < n; k++) {
-    for (let i = 0; i < n; i++) {
-      for (let j = 0; j < n; j++) {
-        if (D[i][k] + D[k][j] < D[i][j]) {
-          D[i][j] = D[i][k] + D[k][j];
-        }
+    function rechnen() {
+      const out = document.getElementById("ausgabe");
+      if (matrix.length === 0) {
+        out.textContent = "Eyyy, ich brauch ne Matrix!";
+        return;
       }
+
+      const n = matrix.length;
+      const distanzen = Array.from({ length: n }, () => Array(n).fill(Infinity));
+      const exzenti = [];
+      let text = "";
+
+      // BFS + DFS und Exzentrizitäten
+      const bfsOrders = [];
+      const dfsOrders = [];
+
+      for (let start = 0; start < n; start++) {
+        // BFS
+        const queue = [start];
+        const visitedB = Array(n).fill(false);
+        const d = Array(n).fill(Infinity);
+        const orderB = [];
+        visitedB[start] = true;
+        d[start] = 0;
+        orderB.push(start);
+        while (queue.length > 0) {
+          const u = queue.shift();
+          for (let v = 0; v < n; v++) {
+            if (matrix[u][v] === 1 && !visitedB[v]) {
+              visitedB[v] = true;
+              d[v] = d[u] + 1;
+              queue.push(v);
+              orderB.push(v);
+            }
+          }
+        }
+        distanzen[start] = d;
+        const maxd = Math.max(...d.filter(x => x < Infinity));
+        exzenti.push(maxd);
+        bfsOrders.push(orderB);
+
+        // DFS
+        const visitedD = Array(n).fill(false);
+        const orderD = [];
+        (function dfs(u) {
+          visitedD[u] = true;
+          orderD.push(u);
+          for (let v = 0; v < n; v++) {
+            if (matrix[u][v] === 1 && !visitedD[v]) dfs(v);
+          }
+        })(start);
+        dfsOrders.push(orderD);
+
+        // Ausgabe pro Knoten
+        text += `Knoten ${start}: Exzentrizität = ${maxd}\n`;
+        text += `BFS: ${orderB.join(" → ")}\n`;
+        text += `DFS: ${orderD.join(" → ")}\n\n`;
+      }
+
+      // Radius, Durchmesser, Zentrum
+      const radius = Math.min(...exzenti);
+      const durchmesser = Math.max(...exzenti);
+      const zentrum = exzenti.map((e, i) => e === radius ? i : null).filter(x => x !== null);
+      text += `Radius = ${radius}\nDurchmesser = ${durchmesser}\nZentrum = ${zentrum.join(", ")}\n\n`;
+
+      // Komponenten
+      const components = (() => {
+        const vis = Array(n).fill(false);
+        const comps = [];
+        for (let i = 0; i < n; i++) {
+          if (!vis[i]) {
+            const comp = [];
+            const q = [i];
+            vis[i] = true;
+            while (q.length > 0) {
+              const u = q.shift();
+              comp.push(u);
+              for (let v = 0; v < n; v++) {
+                if (matrix[u][v] === 1 && !vis[v]) {
+                  vis[v] = true;
+                  q.push(v);
+                }
+              }
+            }
+            comps.push(comp);
+          }
+        }
+        return comps;
+      })();
+      text += `Komponenten (${components.length}): ${components.map(c => '[' + c.join(',') + ']').join(' ')}\n`;
+
+      // Artikulationen und Brücken
+      const { aps, bridges } = (() => {
+        const adj = matrix.map((row, i) => row.map((v, j) => v === 1 ? j : -1).filter(j => j >= 0));
+        const disc = Array(n).fill(-1);
+        const low = Array(n).fill(-1);
+        const parent = Array(n).fill(-1);
+        const apSet = new Set();
+        const bridgeList = [];
+        let time = 0;
+        function dfsTarjan(u) {
+          disc[u] = low[u] = time++;
+          let children = 0;
+          for (const v of adj[u]) {
+            if (disc[v] === -1) {
+              children++;
+              parent[v] = u;
+              dfsTarjan(v);
+              low[u] = Math.min(low[u], low[v]);
+              if ((parent[u] === -1 && children > 1) ||
+                  (parent[u] !== -1 && low[v] >= disc[u])) apSet.add(u);
+              if (low[v] > disc[u]) bridgeList.push([u, v]);
+            } else if (v !== parent[u]) {
+              low[u] = Math.min(low[u], disc[v]);
+            }
+          }
+        }
+        for (let i = 0; i < n; i++) if (disc[i] === -1) dfsTarjan(i);
+        return { aps: Array.from(apSet), bridges: bridgeList };
+      })();
+      text += `Artikulationspunkte: ${aps.join(', ')}\n`;
+      text += `Brücken: ${bridges.map(b => '(' + b[0] + '-' + b[1] + ')').join(', ')}\n\n`;
+
+      // Dijkstra
+      const s = Number(prompt('Startknoten für Dijkstra (0–' + (n-1) + '):'));
+      if (!isNaN(s) && s >= 0 && s < n) {
+        const distD = Array(n).fill(Infinity);
+        const used = Array(n).fill(false);
+        distD[s] = 0;
+        for (let i = 0; i < n; i++) {
+          let u = -1;
+          for (let j = 0; j < n; j++) if (!used[j] && (u < 0 || distD[j] < distD[u])) u = j;
+          if (distD[u] === Infinity) break;
+          used[u] = true;
+          for (let v = 0; v < n; v++) {
+            const w = matrix[u][v];
+            if (w > 0 && distD[u] + w < distD[v]) {
+              distD[v] = distD[u] + w;
+            }
+          }
+        }
+        text += `Dijkstra-Distanzen von ${s}: ${distD.map(d => d===Infinity?'∞':d).join(', ')}\n\n`;
+      } else {
+        text += 'Dijkstra-Start ungültig oder abgebrochen.\n\n';
+      }
+
+      // Distanzmatrix
+      text += 'Distanzmatrix:\n   ' + [...Array(n).keys()].join(' ') + '\n';
+      distanzen.forEach((row, i) => {
+        text += `${i} | ${row.map(d => d === Infinity ? '∞' : d).join(' ')}\n`;
+      });
+
+      // Ergebnis ins <pre> schreiben
+        document.getElementById("ausgabe").textContent = text;  
     }
-  }
 
-  const exz = new Array(n);
-  let ausgabe = '';
-  for (let i = 0; i < n; i++) {
-    const reachable = D[i].filter(d => d < Infinity);
-    const maxDist = reachable.length ? Math.max(...reachable) : Infinity;
-    exz[i] = maxDist;
-    ausgabe += `Knoten ${i}: Exzentrizität = ${maxDist < Infinity ? maxDist : '∞'}\n`;
-  }
-
-  const radius = Math.min(...exz);
-  const durchmesser = Math.max(...exz);
-  const zentrum = exz.map((e, i) => e === radius ? i : null).filter(x => x !== null);
-
-  ausgabe += `\nRadius = ${radius < Infinity ? radius : '∞'}\n`;
-  ausgabe += `Durchmesser = ${durchmesser < Infinity ? durchmesser : '∞'}\n`;
-  ausgabe += `Zentrum = ${zentrum.length ? zentrum.join(', ') : '(keins)'}\n\n`;
-
-  ausgabe += `Distanzmatrix:\n    ${[...Array(n).keys()].join(' ')}\n`;
-  for (let i = 0; i < n; i++) {
-    ausgabe += `${i} | ${D[i].map(x => x === Infinity ? '∞' : x).join(' ')}\n`;
-  }
-
-  document.getElementById('ausgabe').textContent = ausgabe;
-}
 
 //F1 Section 
  // Liste der freien Seasons, die man ausklappen möchte
